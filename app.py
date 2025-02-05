@@ -1,12 +1,22 @@
+import os
 import streamlit as st
 from pdf_loader import PDFLoader
 from vector_store import VectorStore
 from rag_model import RAGModel
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # 설정
-PDF_FOLDER = "data/"       # PDF 문서 폴더
-FAISS_DB_PATH = "faiss_db/"  # FAISS 저장 경로
-LMSTUDIO_API_URL = "http://localhost:1234/v1"  # LM Studio API URL
+PDF_FOLDER = os.getenv("PDF_FOLDER", "data/")
+FAISS_DB_PATH = os.getenv("FAISS_DB_PATH", "faiss_db/")
+LMSTUDIO_API_URL = "http://localhost:1234/v1"
+LOCAL_MODEL_PATH = os.getenv("MODEL_PATH", "models/mistral-7b-instruct-v0.2.Q4_K_M.gguf")
+
+# Create necessary directories
+os.makedirs(PDF_FOLDER, exist_ok=True)
+os.makedirs(FAISS_DB_PATH, exist_ok=True)
 
 # PDF 문서 로딩
 pdf_loader = PDFLoader(PDF_FOLDER)
@@ -14,11 +24,20 @@ documents = pdf_loader.load_pdfs()
 
 # FAISS 벡터 DB 설정
 vector_store = VectorStore(FAISS_DB_PATH)
-vector_store.create_vector_store(documents)  # 최초 실행 시 필요
+if documents:  # Only create if there are documents
+    vector_store.create_vector_store(documents)
 vector_store.load_vector_store()
 
-# LM Studio 모델 설정
-rag_model = RAGModel(LMSTUDIO_API_URL)
+# 모델 선택
+model_option = st.sidebar.radio(
+    "🤖 모델 선택",
+    ["LM Studio API", "로컬 모델"]
+)
+
+if model_option == "LM Studio API":
+    rag_model = RAGModel(model_type="api", api_url=LMSTUDIO_API_URL)
+else:
+    rag_model = RAGModel(model_type="local", model_path=LOCAL_MODEL_PATH)
 
 # Streamlit UI
 st.title("📚 RAG QA System - PDF 문서 기반 검색")
