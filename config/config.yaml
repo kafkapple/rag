@@ -1,0 +1,21 @@
+model:
+  lm_studio:
+    api_url: "http://172.31.249.207:1234/v1"
+    max_tokens: 4096
+    temperature: 0.7
+    repeat_penalty: 1.1
+    top_p: 0.9
+  local:
+    path: "TheBloke/Llama-2-7B-Chat-GGUF/llama-2-7b-chat.Q4_K_M.gguf"
+    max_tokens: 8192
+    temperature: 0.7
+    repeat_penalty: 1.1
+    top_p: 0.9
+
+vector_store:
+  chunk_size: 500
+  chunk_overlap: 50
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+
+paths:
+  pdf_folder: "data/"
