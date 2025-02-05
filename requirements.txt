@@ -1,0 +1,12 @@
+streamlit==1.31.0
+PyMuPDF==1.23.8
+langchain>=0.1.5
+langchain-community>=0.0.20
+langchain-core>=0.1.16
+faiss-cpu==1.7.4
+sentence-transformers==2.3.1
+llama-cpp-python==0.2.39
+openai
+langchain-openai
+tqdm
+tiktoken

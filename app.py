@@ -6,7 +6,7 @@ from rag_model import RAGModel
 # 설정
 PDF_FOLDER = "data/"       # PDF 문서 폴더
 FAISS_DB_PATH = "faiss_db/"  # FAISS 저장 경로
-LMSTUDIO_API_URL = "http://localhost:1234/v1"  # LM Studio API URL
+LMSTUDIO_API_URL = "http://172.31.249.207:1234/v1"#"http://localhost:1234/v1"  # LM Studio API URL
 
 # PDF 문서 로딩
 pdf_loader = PDFLoader(PDF_FOLDER)
