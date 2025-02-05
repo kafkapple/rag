@@ -1,6 +1,7 @@
 # Python
 __pycache__/
 ./streamlit/
+outputs/
 models/
 *.py[cod]
 *$py.class
@@ -36,5 +37,6 @@ ENV/
 # Project specific
 data/
 faiss_db/
+extracted_texts/
 *.pdf
 .env
